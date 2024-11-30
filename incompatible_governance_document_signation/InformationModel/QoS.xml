@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.1.1/rti_dds_profiles.xsd" version="7.2.0">
+	<types>
+		<module name="Types">
+			<struct name="Information">
+				<member name="Data" type="int16" />
+			</struct>
+		</module>
+		<module name="Smth">
+			<struct name="Not_Secret">
+				<member name="Data" type="int16" />
+			</struct>
+		</module>
+	</types>
+	<qos_library name="DefaultQoSLibrary">
+		<qos_profile name="qos_default">
+			<topic_qos>
+				<durability>
+					<kind>VOLATILE_DURABILITY_QOS</kind>
+				</durability>
+				<reliability>
+					<kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+				</reliability>
+				<liveliness>
+					<kind>AUTOMATIC_LIVELINESS_QOS</kind>
+					<lease_duration>
+						<sec>1</sec>
+					</lease_duration>
+				</liveliness>
+			</topic_qos>
+			<datareader_qos>
+				<durability>
+					<kind>VOLATILE_DURABILITY_QOS</kind>
+				</durability>
+				<reliability>
+					<kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+				</reliability>
+				<liveliness>
+					<kind>AUTOMATIC_LIVELINESS_QOS</kind>
+					<lease_duration>
+						<sec>1</sec>
+					</lease_duration>
+				</liveliness>
+			</datareader_qos>
+			<datawriter_qos>
+				<durability>
+					<kind>VOLATILE_DURABILITY_QOS</kind>
+				</durability>
+				<reliability>
+					<kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+				</reliability>
+				<liveliness>
+					<kind>AUTOMATIC_LIVELINESS_QOS</kind>
+					<lease_duration>
+						<sec>1</sec>
+					</lease_duration>
+				</liveliness>
+			</datawriter_qos>
+		</qos_profile>
+	</qos_library>
+	<domain_library name="DefaultDomainLibrary">
+		<domain name="Secure" domain_id="0">
+			<register_type name="Information" type_ref="Types::Information"/>
+			<register_type name="Not_Secret" type_ref="Smth::Not_Secret"/>
+			<topic name="Communication" register_type_ref="Information">
+				<topic_qos base_name="DefaultQoSLibrary::qos_default"/>
+			</topic>
+			<topic name="Not_Secure" register_type_ref="Not_Secret">
+			     <topic_qos base_name="DefaultQoSLibrary::qos_default"/>
+			</topic>
+		</domain>
+	</domain_library>
+</dds>
